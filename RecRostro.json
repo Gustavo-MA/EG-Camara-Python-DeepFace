@@ -1,0 +1,456 @@
+[
+    {
+        "id": "120d637b2e2f0fd1",
+        "type": "tab",
+        "label": "Reconocimiento Rostro",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8310da5dcb4777c9",
+        "type": "ui_template",
+        "z": "120d637b2e2f0fd1",
+        "group": "0fe092aad017bbbd",
+        "name": "ESP32-CAM1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<iframe id=\"Video\" title=\"Video\" width=\"250\" height=\"190\" src=\"http://192.168.0.7:81/stream\">\n</iframe>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 260,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6b817d84fe998558",
+        "type": "ui_button",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "group": "0fe092aad017bbbd",
+        "order": 2,
+        "width": 5,
+        "height": 1,
+        "passthru": true,
+        "label": "Tomar foto",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 250,
+        "y": 300,
+        "wires": [
+            [
+                "ec45be41c58f6ef9",
+                "74ff545cb2c2f5a7"
+            ]
+        ]
+    },
+    {
+        "id": "9f66bf81190c294e",
+        "type": "file",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "filename": "/home/gustavo/Desktop/foto/fotoesp32CAM.jpg",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 840,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ec45be41c58f6ef9",
+        "type": "http request",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "http://192.168.0.7/capture",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "9f66bf81190c294e"
+            ]
+        ]
+    },
+    {
+        "id": "771e979a517e0bc6",
+        "type": "function",
+        "z": "120d637b2e2f0fd1",
+        "name": "function 6",
+        "func": "msg.payload=\n{\n    \"chatId\": 6239367736,\n    \"type\":\"photo\",\n    \"content\": msg.payload\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 560,
+        "wires": [
+            [
+                "644ffa8d1e44fb81",
+                "98e087d6a27098ee",
+                "1b05dc66e73f8a7d"
+            ]
+        ]
+    },
+    {
+        "id": "575d692522a6a3f0",
+        "type": "mqtt in",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "topic": "codigoIoT/ejemplo/DeppFace",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "dbb2841f278f706f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 300,
+        "y": 980,
+        "wires": [
+            [
+                "2e30bff0b45cd63f"
+            ]
+        ]
+    },
+    {
+        "id": "644ffa8d1e44fb81",
+        "type": "debug",
+        "z": "120d637b2e2f0fd1",
+        "name": "debug 17",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 820,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "98e087d6a27098ee",
+        "type": "telegram sender",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "bot": "08ce76143b1dad80",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1010,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "37abf8cd5ce59901",
+        "type": "watch",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "files": "/home/gustavo/Desktop/foto/fotoesp32CAM.jpg",
+        "recursive": "",
+        "x": 780,
+        "y": 460,
+        "wires": [
+            [
+                "771e979a517e0bc6"
+            ]
+        ]
+    },
+    {
+        "id": "10cb5e868aeabc4f",
+        "type": "comment",
+        "z": "120d637b2e2f0fd1",
+        "name": "Se activa el flujo de la camara",
+        "info": "",
+        "x": 320,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a3d9b6e5a3f088da",
+        "type": "comment",
+        "z": "120d637b2e2f0fd1",
+        "name": "Se toma la foto y se guarda en un directorio",
+        "info": "",
+        "x": 370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "a46a5e749d79cdba",
+        "type": "comment",
+        "z": "120d637b2e2f0fd1",
+        "name": "Se lee la foto y seenvia a telegram",
+        "info": "",
+        "x": 320,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "040a6177c82ff6ff",
+        "type": "debug",
+        "z": "120d637b2e2f0fd1",
+        "name": "Salida DeepFace",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "2e30bff0b45cd63f",
+        "type": "json",
+        "z": "120d637b2e2f0fd1",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 590,
+        "y": 980,
+        "wires": [
+            [
+                "040a6177c82ff6ff",
+                "eb105d15cbac0d20"
+            ]
+        ]
+    },
+    {
+        "id": "1b05dc66e73f8a7d",
+        "type": "exec",
+        "z": "120d637b2e2f0fd1",
+        "command": "python3 /home/gustavo/Desktop/foto/facial-atributes-rec.py",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "",
+        "x": 760,
+        "y": 760,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4587a596e6ae49c0",
+        "type": "ui_text",
+        "z": "120d637b2e2f0fd1",
+        "group": "0fe092aad017bbbd",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Resultados:",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 1050,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "eb105d15cbac0d20",
+        "type": "function",
+        "z": "120d637b2e2f0fd1",
+        "name": "ObtenerCaracteristicas",
+        "func": "var edad = msg.payload.age;\nvar genero = msg.payload.gender;\nvar raza = msg.payload.dominant_race;\nvar emocion = msg.payload.dominant_emotion;\nvar genero = msg.payload.gender;\nmsg.payload = \"Edad: \" + edad.toString() +\",\"+ \"\\nGenero: \" + genero.toString() + \"\\nRaza: \" + raza.toString()+\",\" + \"\\nEmocion: \" + emocion.toString()+\"\\n\";\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 1040,
+        "wires": [
+            [
+                "4587a596e6ae49c0"
+            ]
+        ]
+    },
+    {
+        "id": "f27af0cd47a01dfb",
+        "type": "comment",
+        "z": "120d637b2e2f0fd1",
+        "name": "Se ejecuta archivo de reconocimiento de rostro",
+        "info": "",
+        "x": 760,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "34a1fc1baf414911",
+        "type": "comment",
+        "z": "120d637b2e2f0fd1",
+        "name": "Se reciben resultados de procesamiento de rostro",
+        "info": "",
+        "x": 360,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "74ff545cb2c2f5a7",
+        "type": "ui_template",
+        "z": "120d637b2e2f0fd1",
+        "d": true,
+        "group": "0fe092aad017bbbd",
+        "name": "Captura",
+        "order": 4,
+        "width": "6",
+        "height": "5",
+        "format": "<iframe \nid=\"Captura\" \ntitle=\"Captura\" \nwidth=\"250\" \nheight=\"190\" \nsrc=\"http://192.168.1.176:79/capture\">\n</iframe>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 460,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0a58eedab4ac1414",
+        "type": "ui_media",
+        "z": "120d637b2e2f0fd1",
+        "d": true,
+        "group": "0fe092aad017bbbd",
+        "name": "",
+        "width": "6",
+        "height": "5",
+        "order": 5,
+        "category": "Rostro",
+        "file": "fotoesp32CAM.jpg",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": true,
+        "scope": "local",
+        "tooltip": "",
+        "x": 910,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0afc8e83d63420b7",
+        "type": "ui_spacer",
+        "z": "120d637b2e2f0fd1",
+        "name": "spacer",
+        "group": "0fe092aad017bbbd",
+        "order": 3,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "0fe092aad017bbbd",
+        "type": "ui_group",
+        "name": "Reconocimiento Facial",
+        "tab": "91d4bac6f4d55a4a",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "dbb2841f278f706f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "08ce76143b1dad80",
+        "type": "telegram bot",
+        "botname": "prueba_servo_bot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "91d4bac6f4d55a4a",
+        "type": "ui_tab",
+        "name": "Rec-PersonaAtributos",
+        "icon": "dashboard",
+        "order": 12,
+        "disabled": false,
+        "hidden": false
+    }
+]
